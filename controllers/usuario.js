@@ -33,8 +33,14 @@ const registrarUsuario = (req, res) => {
             // si hay un error en el registro
             res.status(500).send({ err: "No se registro el usuario" });
           } else {
+            const response = {
+              usuario: saveUsuario.nombreUsuario,
+              nombre: saveUsuario.nombre,
+              correo: saveUsuario.correo,
+              fechaRegistro: saveUsuario.fechaRegistro
+            }
             // si el proceso se completo bien procedemos a guardar en el modelo los datos
-            res.status(200).send({ usuario: saveUsuario });
+            res.status(201).send({ usuario: response });
           }
         });
       }
@@ -62,17 +68,15 @@ const login = (req, res) => {
       if (datosUsuario) {
         bcrypt.compare(params.pass, datosUsuario.pass, (err, confirm) => {
           if (confirm) {
-            if (params.getToken) {
-              res.status(200).send({
-                jwt: jwt.createToken(datosUsuario),
-                user: datosUsuario,
-
-              });
-            } else {
-              res
-                .status(200)
-                .send({ Usuario: datosUsuario, mensaje: "Sin token" });
+            const response = {
+              usuario: datosUsuario.nombreUsuario,
+              nombre: datosUsuario.nombre,
+              correo: datosUsuario.correo
             }
+            res.status(200).send({
+              token: jwt.createToken(datosUsuario),
+              user: response,
+            });
           } else {
             res.status(401).send({ mensaje: " Correo o password incorrectos" });
           }
@@ -91,6 +95,7 @@ module.exports = {
 
 // Importamos jwt
 let jwt = require("../libs/jwt");
+const { response } = require("express");
 //Logout
 
 
