@@ -29,9 +29,9 @@ app.use(bodyParser.json());
 module.exports = app;
 
 
-
 //routes
 let usuarioRoutes = require("./routes/usuario");
+let donacionRoutes = require("./routes/donacion");
 
 // conexion a BD
 mongoose.connect(
@@ -48,7 +48,8 @@ app.use(bodyParser.json());
 
 // usar las rutas
 
-app.use("/api",usuarioRoutes)
+app.use("/api",usuarioRoutes);
+app.use("/api",donacionRoutes);
 
 // exportar la app
 module.exports = app;
