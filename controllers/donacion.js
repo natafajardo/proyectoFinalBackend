@@ -38,6 +38,14 @@ const guardarPlan = (req, res) => {
 
 }
 
+donacionPorUsuario = (req, res) => {
+  const params = req.body;
+}
+
+
+
+
 module.exports = {
   guardarPlan
 };
+
